@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop, removeListener } from './helpers';
 import { NotificationWillDisplayEvent } from './NotificationReceivedEvent';
 import type { OSNotification } from './OSNotification';
@@ -39,7 +40,7 @@ export default class Notifications {
     const getPermissionCallback = (granted: boolean) => {
       this._permission = granted;
     };
-    window.cordova.exec(getPermissionCallback, noop, 'OneSignalPush', 'getPermissionInternal');
+    exec(getPermissionCallback, noop, 'OneSignalPush', 'getPermissionInternal');
 
     this.addEventListener('permissionChange', (result) => {
       this._permission = result;
@@ -59,7 +60,7 @@ export default class Notifications {
    */
   getPermissionAsync(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'getPermissionInternal');
+      exec(resolve, reject, 'OneSignalPush', 'getPermissionInternal');
     });
   }
 
@@ -76,7 +77,7 @@ export default class Notifications {
    * */
   permissionNative(): Promise<OSNotificationPermission> {
     return new Promise<OSNotificationPermission>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'permissionNative', []);
+      exec(resolve, reject, 'OneSignalPush', 'permissionNative', []);
     });
   }
 
@@ -92,7 +93,7 @@ export default class Notifications {
     let fallback = fallbackToSettings ?? false;
 
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'requestPermission', [fallback]);
+      exec(resolve, reject, 'OneSignalPush', 'requestPermission', [fallback]);
     });
   }
 
@@ -102,7 +103,7 @@ export default class Notifications {
    */
   canRequestPermission(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'canRequestPermission', []);
+      exec(resolve, reject, 'OneSignalPush', 'canRequestPermission', []);
     });
   }
 
@@ -119,7 +120,7 @@ export default class Notifications {
    * @returns void
    */
   registerForProvisionalAuthorization(handler: (response: boolean) => void = noop): void {
-    window.cordova.exec(handler, noop, 'OneSignalPush', 'registerForProvisionalAuthorization', []);
+    exec(handler, noop, 'OneSignalPush', 'registerForProvisionalAuthorization', []);
   }
 
   /**
@@ -138,13 +139,7 @@ export default class Notifications {
         const clickParsingHandler = (json: NotificationClickEvent) => {
           this._processFunctionList(this._notificationClickedListeners, json);
         };
-        window.cordova.exec(
-          clickParsingHandler,
-          noop,
-          'OneSignalPush',
-          'addNotificationClickListener',
-          [],
-        );
+        exec(clickParsingHandler, noop, 'OneSignalPush', 'addNotificationClickListener', []);
       }
     } else if (event === 'foregroundWillDisplay') {
       this._notificationWillDisplayListeners.push(
@@ -156,17 +151,11 @@ export default class Notifications {
           this._notificationWillDisplayListeners.forEach((listener) => {
             listener(new NotificationWillDisplayEvent(notification));
           });
-          window.cordova.exec(noop, noop, 'OneSignalPush', 'proceedWithWillDisplay', [
+          exec(noop, noop, 'OneSignalPush', 'proceedWithWillDisplay', [
             notification.notificationId,
           ]);
         };
-        window.cordova.exec(
-          foregroundParsingHandler,
-          noop,
-          'OneSignalPush',
-          'addForegroundLifecycleListener',
-          [],
-        );
+        exec(foregroundParsingHandler, noop, 'OneSignalPush', 'addForegroundLifecycleListener', []);
       }
     } else if (event === 'permissionChange') {
       this._permissionObserverList.push(listener as (event: boolean) => void);
@@ -175,13 +164,7 @@ export default class Notifications {
         const permissionCallBackProcessor = (state: boolean) => {
           this._processFunctionList(this._permissionObserverList, state);
         };
-        window.cordova.exec(
-          permissionCallBackProcessor,
-          noop,
-          'OneSignalPush',
-          'addPermissionObserver',
-          [],
-        );
+        exec(permissionCallBackProcessor, noop, 'OneSignalPush', 'addPermissionObserver', []);
       }
     }
   }
@@ -216,7 +199,7 @@ export default class Notifications {
    * @returns void
    */
   clearAll(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'clearAllNotifications', []);
+    exec(noop, noop, 'OneSignalPush', 'clearAllNotifications', []);
   }
 
   /**
@@ -230,7 +213,7 @@ export default class Notifications {
    * @returns void
    */
   removeNotification(id: number): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'removeNotification', [id]);
+    exec(noop, noop, 'OneSignalPush', 'removeNotification', [id]);
   }
 
   /**
@@ -240,6 +223,6 @@ export default class Notifications {
    * @returns void
    */
   removeGroupedNotifications(id: string): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'removeGroupedNotifications', [id]);
+    exec(noop, noop, 'OneSignalPush', 'removeGroupedNotifications', [id]);
   }
 }

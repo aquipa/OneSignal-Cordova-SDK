@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop } from './helpers';
 import { OSNotification } from './OSNotification';
 
@@ -17,7 +18,7 @@ export class NotificationWillDisplayEvent {
    * possibility of displaying it in the future.
    */
   preventDefault(discard: boolean = false): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'preventDefault', [
+    exec(noop, noop, 'OneSignalPush', 'preventDefault', [
       this.notification.notificationId,
       discard,
     ]);

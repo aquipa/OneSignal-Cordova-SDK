@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop, removeListener } from './helpers';
 
 // Represents the current user's push notification subscription state with OneSignal
@@ -41,7 +42,7 @@ export default class PushSubscription {
     const getIdCallback = (id: string) => {
       this._id = id;
     };
-    window.cordova.exec(getIdCallback, noop, 'OneSignalPush', 'getPushSubscriptionId');
+    exec(getIdCallback, noop, 'OneSignalPush', 'getPushSubscriptionId');
 
     /**
      * Receive token
@@ -50,7 +51,7 @@ export default class PushSubscription {
     const getTokenCallback = (token: string) => {
       this._token = token;
     };
-    window.cordova.exec(getTokenCallback, noop, 'OneSignalPush', 'getPushSubscriptionToken');
+    exec(getTokenCallback, noop, 'OneSignalPush', 'getPushSubscriptionToken');
 
     /**
      * Receive opted-in status
@@ -59,7 +60,7 @@ export default class PushSubscription {
     const getOptedInCallback = (granted: boolean) => {
       this._optedIn = granted;
     };
-    window.cordova.exec(getOptedInCallback, noop, 'OneSignalPush', 'getPushSubscriptionOptedIn');
+    exec(getOptedInCallback, noop, 'OneSignalPush', 'getPushSubscriptionOptedIn');
 
     this.addEventListener('change', (subscriptionChange) => {
       this._id = subscriptionChange.current.id;
@@ -104,7 +105,7 @@ export default class PushSubscription {
    */
   getIdAsync(): Promise<string | null> {
     return new Promise<string | null>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionId');
+      exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionId');
     });
   }
 
@@ -114,7 +115,7 @@ export default class PushSubscription {
    */
   getTokenAsync(): Promise<string | null> {
     return new Promise<string | null>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionToken');
+      exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionToken');
     });
   }
 
@@ -127,7 +128,7 @@ export default class PushSubscription {
    */
   getOptedInAsync(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionOptedIn');
+      exec(resolve, reject, 'OneSignalPush', 'getPushSubscriptionOptedIn');
     });
   }
 
@@ -143,13 +144,7 @@ export default class PushSubscription {
       const subscriptionCallBackProcessor = (state: PushSubscriptionChangedState) => {
         this._processFunctionList(this._subscriptionObserverList, state);
       };
-      window.cordova.exec(
-        subscriptionCallBackProcessor,
-        noop,
-        'OneSignalPush',
-        'addPushSubscriptionObserver',
-        [],
-      );
+      exec(subscriptionCallBackProcessor, noop, 'OneSignalPush', 'addPushSubscriptionObserver', []);
     }
   }
 
@@ -167,7 +162,7 @@ export default class PushSubscription {
    * @returns void
    */
   optIn(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'optInPushSubscription');
+    exec(noop, noop, 'OneSignalPush', 'optInPushSubscription');
   }
 
   /**
@@ -175,6 +170,6 @@ export default class PushSubscription {
    * @returns void
    */
   optOut(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'optOutPushSubscription');
+    exec(noop, noop, 'OneSignalPush', 'optOutPushSubscription');
   }
 }

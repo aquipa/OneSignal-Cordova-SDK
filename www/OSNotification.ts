@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop } from './helpers';
 
 export type ReceivedEvent = Omit<OSNotification, 'display' | 'rawPayload'> & {
@@ -275,6 +276,6 @@ export class OSNotification {
    * @returns void
    */
   display(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'displayNotification', [this.notificationId]);
+    exec(noop, noop, 'OneSignalPush', 'displayNotification', [this.notificationId]);
   }
 }

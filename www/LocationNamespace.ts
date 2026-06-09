@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop } from './helpers';
 
 export default class Location {
@@ -10,7 +11,7 @@ export default class Location {
    * @returns void
    */
   requestPermission(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'requestLocationPermission', []);
+    exec(noop, noop, 'OneSignalPush', 'requestLocationPermission', []);
   }
 
   /**
@@ -19,7 +20,7 @@ export default class Location {
    * @returns void
    */
   setShared(shared: boolean): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'setLocationShared', [shared]);
+    exec(noop, noop, 'OneSignalPush', 'setLocationShared', [shared]);
   }
 
   /**
@@ -28,7 +29,7 @@ export default class Location {
    */
   isShared(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'isLocationShared', []);
+      exec(resolve, reject, 'OneSignalPush', 'isLocationShared', []);
     });
   }
 }

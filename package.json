@@ -29,7 +29,10 @@
     "dist",
     "plugin.xml",
     "src",
-    "build-extras-onesignal.gradle"
+    "build-extras-onesignal.gradle",
+    "android",
+    "ios",
+    "OneSignalCordovaPlugin.podspec"
   ],
   "type": "module",
   "main": "dist/index.cjs",
@@ -53,6 +56,14 @@
     "happy-dom": "^20.0.8",
     "typescript": "^5.9.3",
     "vite-plus": "^0.1.19"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@capacitor/core": {
+      "optional": true
+    }
   },
   "overrides": {
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
@@ -81,6 +92,14 @@
     }
   ],
   "packageManager": "bun@1.3.13",
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
   "cordova": {
     "id": "onesignal-cordova-plugin",
     "platforms": [

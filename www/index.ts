@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 /**
  * Modified MIT License
  *
@@ -65,7 +66,7 @@ export class OneSignalPlugin {
       this.Notifications._setPropertyAndObserver();
     };
 
-    window.cordova.exec(observerCallback, noop, 'OneSignalPush', 'init', [this._appID]);
+    exec(observerCallback, noop, 'OneSignalPush', 'init', [this._appID]);
   }
 
   /**
@@ -74,7 +75,7 @@ export class OneSignalPlugin {
    * @returns void
    */
   login(externalId: string): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'login', [externalId]);
+    exec(noop, noop, 'OneSignalPush', 'login', [externalId]);
   }
 
   /**
@@ -83,7 +84,7 @@ export class OneSignalPlugin {
    * @returns void
    */
   logout(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'logout');
+    exec(noop, noop, 'OneSignalPush', 'logout');
   }
 
   /**
@@ -92,7 +93,7 @@ export class OneSignalPlugin {
    * @returns void
    */
   setConsentRequired(required: boolean): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'setPrivacyConsentRequired', [required]);
+    exec(noop, noop, 'OneSignalPush', 'setPrivacyConsentRequired', [required]);
   }
 
   /**
@@ -101,7 +102,7 @@ export class OneSignalPlugin {
    * @returns void
    */
   setConsentGiven(granted: boolean): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'setPrivacyConsentGiven', [granted]);
+    exec(noop, noop, 'OneSignalPush', 'setPrivacyConsentGiven', [granted]);
   }
 }
 

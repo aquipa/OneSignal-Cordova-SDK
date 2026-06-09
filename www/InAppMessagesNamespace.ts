@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop, removeListener } from './helpers';
 import type {
   InAppMessageClickEvent,
@@ -43,13 +44,7 @@ export default class InAppMessages {
         const inAppMessageClickListener = (json: InAppMessageClickEvent) => {
           this._processFunctionList(this._inAppMessageClickListeners, json);
         };
-        window.cordova.exec(
-          inAppMessageClickListener,
-          noop,
-          'OneSignalPush',
-          'setInAppMessageClickHandler',
-          [],
-        );
+        exec(inAppMessageClickListener, noop, 'OneSignalPush', 'setInAppMessageClickHandler', []);
       }
     } else if (event === 'willDisplay') {
       this._willDisplayInAppMessageListeners.push(
@@ -60,7 +55,7 @@ export default class InAppMessages {
         const willDisplayCallBackProcessor = (event: InAppMessageWillDisplayEvent) => {
           this._processFunctionList(this._willDisplayInAppMessageListeners, event);
         };
-        window.cordova.exec(
+        exec(
           willDisplayCallBackProcessor,
           noop,
           'OneSignalPush',
@@ -77,7 +72,7 @@ export default class InAppMessages {
         const didDisplayCallBackProcessor = (event: InAppMessageDidDisplayEvent) => {
           this._processFunctionList(this._didDisplayInAppMessageListeners, event);
         };
-        window.cordova.exec(
+        exec(
           didDisplayCallBackProcessor,
           noop,
           'OneSignalPush',
@@ -94,7 +89,7 @@ export default class InAppMessages {
         const willDismissInAppMessageProcessor = (event: InAppMessageWillDismissEvent) => {
           this._processFunctionList(this._willDismissInAppMessageListeners, event);
         };
-        window.cordova.exec(
+        exec(
           willDismissInAppMessageProcessor,
           noop,
           'OneSignalPush',
@@ -111,7 +106,7 @@ export default class InAppMessages {
         const didDismissInAppMessageCallBackProcessor = (event: InAppMessageDidDismissEvent) => {
           this._processFunctionList(this._didDismissInAppMessageListeners, event);
         };
-        window.cordova.exec(
+        exec(
           didDismissInAppMessageCallBackProcessor,
           noop,
           'OneSignalPush',
@@ -170,7 +165,7 @@ export default class InAppMessages {
       }
     });
 
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'addTriggers', [triggers]);
+    exec(noop, noop, 'OneSignalPush', 'addTriggers', [triggers]);
   }
 
   /**
@@ -192,7 +187,7 @@ export default class InAppMessages {
       console.error('OneSignal: removeTriggers: argument must be of type Array');
     }
 
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'removeTriggers', [keys]);
+    exec(noop, noop, 'OneSignalPush', 'removeTriggers', [keys]);
   }
 
   /**
@@ -200,7 +195,7 @@ export default class InAppMessages {
    * @returns void
    */
   clearTriggers(): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'clearTriggers');
+    exec(noop, noop, 'OneSignalPush', 'clearTriggers');
   }
 
   /**
@@ -211,7 +206,7 @@ export default class InAppMessages {
    * @returns void
    */
   setPaused(pause: boolean): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'setPaused', [pause]);
+    exec(noop, noop, 'OneSignalPush', 'setPaused', [pause]);
   }
 
   /**
@@ -220,7 +215,7 @@ export default class InAppMessages {
    */
   getPaused(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      window.cordova.exec(resolve, reject, 'OneSignalPush', 'isPaused', []);
+      exec(resolve, reject, 'OneSignalPush', 'isPaused', []);
     });
   }
 }

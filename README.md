@@ -36,6 +36,20 @@ See the [Documentation](https://documentation.onesignal.com/docs) for installati
 - Cordova: https://documentation.onesignal.com/docs/cordova-sdk-setup
 - Ionic: https://documentation.onesignal.com/docs/ionic-sdk-setup
 
+##### Cordova
+
+Install this package with the Cordova CLI and prepare the native platforms as usual. The existing Cordova `plugin.xml` integration remains supported and continues to expose the public JavaScript API through `window.cordova.exec`.
+
+##### Capacitor without Cordova
+
+Capacitor apps can install this package directly without adding Cordova platform packages:
+
+1. Install `onesignal-cordova-plugin` in the Capacitor app.
+2. Run the Capacitor sync command for the target platforms, for example `npx cap sync ios` and/or `npx cap sync android`.
+3. Keep using the same JavaScript API, such as `OneSignal.initialize(...)` and `OneSignal.Notifications.addEventListener(...)`.
+
+At runtime the SDK uses Cordova when `window.cordova.exec` exists. Otherwise, it detects the registered Capacitor `OneSignalPush` native plugin and routes calls through Capacitor. If neither native bridge is available, the SDK throws a clear setup error.
+
 #### API
 
 See OneSignal's [Client SDK Reference](https://documentation.onesignal.com/docs/sdk-reference) page for a list of all available methods.

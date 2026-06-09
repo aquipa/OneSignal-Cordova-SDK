@@ -1,3 +1,4 @@
+import { exec } from './bridge';
 import { noop } from './helpers';
 
 export default class Session {
@@ -11,7 +12,7 @@ export default class Session {
    * @returns void
    */
   addOutcome(name: string): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'addOutcome', [name]);
+    exec(noop, noop, 'OneSignalPush', 'addOutcome', [name]);
   }
 
   /**
@@ -20,7 +21,7 @@ export default class Session {
    * @returns void
    */
   addUniqueOutcome(name: string): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'addUniqueOutcome', [name]);
+    exec(noop, noop, 'OneSignalPush', 'addUniqueOutcome', [name]);
   }
 
   /**
@@ -30,6 +31,6 @@ export default class Session {
    * @returns void
    */
   addOutcomeWithValue(name: string, value: number): void {
-    window.cordova.exec(noop, noop, 'OneSignalPush', 'addOutcomeWithValue', [name, value]);
+    exec(noop, noop, 'OneSignalPush', 'addOutcomeWithValue', [name, value]);
   }
 }
